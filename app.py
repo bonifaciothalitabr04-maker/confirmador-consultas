@@ -4,7 +4,7 @@ import urllib.parse
 st.set_page_config(page_title="Confirmação WhatsApp", page_icon="🏥", layout="centered")
 
 st.title("🏥 Central de Confirmação de Consultas")
-st.write("Preencha os dados abaixo para gerar a mensagem e abrir o WhatsApp.")
+st.write("Preencha os dados abaixo para gerar a mensagem e disparar para o WhatsApp.")
 
 col1, col2 = st.columns(2)
 with col1:
@@ -34,18 +34,28 @@ if st.button("Gerar Mensagem", type="primary"):
         )
 
         texto_url = urllib.parse.quote(mensagem)
-        
-        # Link direto para WhatsApp Web (no computador)
-        link_web = f"https://web.whatsapp.com/send?phone={num_limpo}&text={texto_url}"
-        
-        # Link universal direto para celular (abre o app do WhatsApp no telefone)
-        link_mobile = f"https://wa.me/{num_limpo}?text={texto_url}"
+        link_app = f"https://api.whatsapp.com/send?phone={num_limpo}&text={texto_url}"
 
-        st.success("Mensagem gerada!")
+        st.success("Mensagem pronta!")
         st.text_area("Pré-visualização do texto:", mensagem, height=130)
 
-        # Botão principal para quem está no PC
-        st.link_button("💻 Enviar pelo WhatsApp Web (Computador)", link_web, type="primary")
-        
-        # Botão alternativo para celular
-        st.link_button("📱 Enviar pelo Celular (App)", link_mobile)
+        # Botão com link direto para chamar o WhatsApp instalado
+        st.markdown(
+            f"""
+            <a href="{link_app}" style="
+                display: block;
+                text-align: center;
+                background-color: #25D366;
+                color: white;
+                padding: 14px 20px;
+                border-radius: 8px;
+                text-decoration: none;
+                font-weight: bold;
+                font-size: 16px;
+                margin-top: 10px;
+            ">
+                🚀 Abrir e Disparar no WhatsApp
+            </a>
+            """,
+            unsafe_allow_html=True
+        )
