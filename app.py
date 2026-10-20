@@ -20,7 +20,6 @@ if st.button("Gerar Mensagem", type="primary"):
     if not telefone or not nome_paciente:
         st.error("Por favor, preencha ao menos o nome do paciente e o WhatsApp.")
     else:
-        # Mantém apenas os dígitos numéricos
         num_limpo = ''.join(filter(str.isdigit, str(telefone)))
         if not num_limpo.startswith('55'):
             num_limpo = '55' + num_limpo
@@ -36,32 +35,17 @@ if st.button("Gerar Mensagem", type="primary"):
 
         texto_url = urllib.parse.quote(mensagem)
         
-        # Link com protocolo direto para o aplicativo nativo do WhatsApp
-        link_app_direto = f"whatsapp://send?phone={num_limpo}&text={texto_url}"
+        # Link direto para WhatsApp Web (no computador)
         link_web = f"https://web.whatsapp.com/send?phone={num_limpo}&text={texto_url}"
-
-        st.success("Mensagem pronta!")
-        st.text_area("Pré-visualização do texto:", mensagem, height=140)
         
-        st.markdown(
-            f"""
-            <a href="{link_app_direto}" style="
-                display: block;
-                text-align: center;
-                background-color: #25D366;
-                color: white;
-                padding: 12px 20px;
-                border-radius: 8px;
-                text-decoration: none;
-                font-weight: bold;
-                font-size: 16px;
-                margin-top: 10px;
-                margin-bottom: 8px;
-            ">
-                🚀 Abrir Direto no App do WhatsApp
-            </a>
-            """,
-            unsafe_allow_html=True
-        )
-        st.caption("Caso esteja no computador sem o app instalado, use o botão alternativo do WhatsApp Web:")
-        st.link_button("🌐 Abrir no WhatsApp Web", link_web)
+        # Link universal direto para celular (abre o app do WhatsApp no telefone)
+        link_mobile = f"https://wa.me/{num_limpo}?text={texto_url}"
+
+        st.success("Mensagem gerada!")
+        st.text_area("Pré-visualização do texto:", mensagem, height=130)
+
+        # Botão principal para quem está no PC
+        st.link_button("💻 Enviar pelo WhatsApp Web (Computador)", link_web, type="primary")
+        
+        # Botão alternativo para celular
+        st.link_button("📱 Enviar pelo Celular (App)", link_mobile)
