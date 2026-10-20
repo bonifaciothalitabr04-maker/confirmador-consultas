@@ -1,6 +1,5 @@
 import streamlit as st
 import urllib.parse
-import streamlit.components.v1 as components
 
 st.set_page_config(page_title="Confirmação WhatsApp", page_icon="🏥", layout="centered")
 
@@ -17,7 +16,7 @@ with col2:
 
 nome_medico = st.text_input("Nome do Médico", placeholder="Ex: Dr. Carlos Eduardo")
 
-if st.button("Gerar e Abrir no WhatsApp", type="primary"):
+if st.button("Gerar Mensagem", type="primary"):
     if not telefone or not nome_paciente:
         st.error("Por favor, preencha pelo menos o nome do paciente e o WhatsApp.")
     else:
@@ -35,32 +34,15 @@ if st.button("Gerar e Abrir no WhatsApp", type="primary"):
         )
 
         texto_url = urllib.parse.quote(mensagem, safe='')
-        link_app_pc = f"whatsapp://send/?phone={num_limpo}&text={texto_url}"
+        
+        # Link que entra direto na conversa do WhatsApp Web sem telas intermediárias
+        link_web = f"https://web.whatsapp.com/send?phone={num_limpo}&text={texto_url}"
+        
+        # Link universal direto
+        link_api = f"https://api.whatsapp.com/send?phone={num_limpo}&text={texto_url}"
 
         st.success("Mensagem preparada com sucesso!")
-        st.text_area("Pré-visualização do texto:", mensagem, height=130)
+        st.text_area("Pré-visualização do texto:", mensagem, height=140)
 
-        # Dispara a abertura do aplicativo nativo diretamente via script
-        components.html(
-            f"""
-            <iframe src="{link_app_pc}" style="display:none;"></iframe>
-            <div style="text-align: center; margin-top: 10px;">
-                <p style="color: #166534; font-weight: bold;">
-                    A abrir o WhatsApp no computador...
-                </p>
-                <a href="{link_app_pc}" style="
-                    display: inline-block;
-                    background-color: #25D366;
-                    color: white;
-                    padding: 10px 18px;
-                    border-radius: 6px;
-                    text-decoration: none;
-                    font-weight: bold;
-                    font-size: 14px;
-                ">
-                    Clique aqui se o programa não abrir automaticamente
-                </a>
-            </div>
-            """,
-            height=90
-        )
+        st.link_button("👉 Abrir Conversa no WhatsApp Web", link_web, type="primary")
+        st.link_button("📱 Abrir no WhatsApp (Link Geral / Celular)", link_api)
