@@ -1,48 +1,69 @@
 import streamlit as st
 import urllib.parse
 
-st.set_page_config(page_title="Confirmação WhatsApp", page_icon="🏥", layout="centered")
+# Configurações da página
+st.set_page_config(
+    page_title="SUS - Confirmação de Consultas",
+    page_icon="⚕️",
+    layout="centered"
+)
 
-st.title("🏥 Central de Confirmação de Consultas")
-st.write("Preencha os dados abaixo para enviar a confirmação.")
+# Estilização visual inspirada na identidade do SUS
+st.markdown(
+    """
+    <style>
+        /* Fonte e fundo padrão */
+        .main {
+            background-color: #F8FAFC;
+        }
 
-col1, col2 = st.columns(2)
-with col1:
-    nome_paciente = st.text_input("Nome do Paciente", placeholder="Ex: Maria da Silva")
-    data = st.text_input("Data da Consulta", placeholder="Ex: 25/11/2026")
-with col2:
-    telefone = st.text_input("WhatsApp (com DDD)", placeholder="Ex: 34999998888")
-    horario = st.text_input("Horário", placeholder="Ex: 14:30")
+        /* Banner de Cabeçalho do SUS */
+        .sus-header {
+            background: linear-gradient(135deg, #005CA9 0%, #003B6F 100%);
+            padding: 24px;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .sus-header h1 {
+            color: #FFFFFF !important;
+            font-size: 26px;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+        .sus-header p {
+            color: #E2E8F0;
+            font-size: 14px;
+            margin-top: 6px;
+            margin-bottom: 0;
+        }
 
-nome_medico = st.text_input("Nome do Médico", placeholder="Ex: Dr. Carlos Eduardo")
+        /* Cartão de formulário */
+        .form-container {
+            background-color: #FFFFFF;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            margin-bottom: 20px;
+        }
 
-if st.button("Gerar Mensagem", type="primary"):
-    if not telefone or not nome_paciente:
-        st.error("Por favor, preencha pelo menos o nome do paciente e o WhatsApp.")
-    else:
-        num_limpo = ''.join(filter(str.isdigit, str(telefone)))
-        if not num_limpo.startswith('55'):
-            num_limpo = '55' + num_limpo
+        /* Rótulos e inputs */
+        label {
+            font-weight: 600 !important;
+            color: #1E293B !important;
+        }
+        .stTextInput input {
+            border-radius: 8px !important;
+            border: 1px solid #CBD5E1 !important;
+            padding: 10px 14px !important;
+        }
+        .stTextInput input:focus {
+            border-color: #005CA9 !important;
+            box-shadow: 0 0 0 2px rgba(0, 92, 169, 0.2) !important;
+        }
 
-        mensagem = (
-            f"Olá, {nome_paciente}!\n\n"
-            f"Passando para confirmar sua consulta médica agendada:\n"
-            f"- Médico(a): {nome_medico}\n"
-            f"- Data: {data}\n"
-            f"- Horário: {horario}\n\n"
-            f"Por favor, responda com *SIM* para confirmar ou nos avise caso precise reagendar."
-        )
-
-        texto_url = urllib.parse.quote(mensagem, safe='')
-        
-        # Link que entra direto na conversa do WhatsApp Web sem telas intermediárias
-        link_web = f"https://web.whatsapp.com/send?phone={num_limpo}&text={texto_url}"
-        
-        # Link universal direto
-        link_api = f"https://api.whatsapp.com/send?phone={num_limpo}&text={texto_url}"
-
-        st.success("Mensagem preparada com sucesso!")
-        st.text_area("Pré-visualização do texto:", mensagem, height=140)
-
-        st.link_button("👉 Abrir Conversa no WhatsApp Web", link_web, type="primary")
-        st.link_button("📱 Abrir no WhatsApp (Link Geral / Celular)", link_api)
+        /* Botão principal de ação */
