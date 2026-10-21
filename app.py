@@ -12,12 +12,9 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-        /* Fonte e fundo padrão */
         .main {
             background-color: #F8FAFC;
         }
-
-        /* Banner de Cabeçalho do SUS */
         .sus-header {
             background: linear-gradient(135deg, #005CA9 0%, #003B6F 100%);
             padding: 24px;
@@ -40,18 +37,6 @@ st.markdown(
             margin-top: 6px;
             margin-bottom: 0;
         }
-
-        /* Cartão de formulário */
-        .form-container {
-            background-color: #FFFFFF;
-            padding: 24px;
-            border-radius: 12px;
-            border: 1px solid #E2E8F0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-            margin-bottom: 20px;
-        }
-
-        /* Rótulos e inputs */
         label {
             font-weight: 600 !important;
             color: #1E293B !important;
@@ -65,5 +50,31 @@ st.markdown(
             border-color: #005CA9 !important;
             box-shadow: 0 0 0 2px rgba(0, 92, 169, 0.2) !important;
         }
+        div.stButton > button:first-child {
+            background-color: #005CA9 !important;
+            color: white !important;
+            font-weight: 600 !important;
+            border-radius: 8px !important;
+            border: none !important;
+            padding: 12px 24px !important;
+            width: 100% !important;
+            transition: all 0.2s ease-in-out !important;
+        }
+        div.stButton > button:first-child:hover {
+            background-color: #004580 !important;
+            box-shadow: 0 4px 8px rgba(0, 92, 169, 0.25) !important;
+        }
+        .sus-footer {
+            text-align: center;
+            color: #64748B;
+            font-size: 12px;
+            margin-top: 40px;
+            padding-top: 15px;
+            border-top: 1px solid #E2E8F0;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
-        /* Botão principal de ação */
+# Cabe
