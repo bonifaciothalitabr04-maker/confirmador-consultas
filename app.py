@@ -1,14 +1,12 @@
 import streamlit as st
 import urllib.parse
 
-# Configurações da página
 st.set_page_config(
     page_title="SUS - Confirmação de Consultas",
     page_icon="⚕️",
     layout="centered"
 )
 
-# Estilização visual inspirada na identidade do SUS
 st.markdown(
     """
     <style>
@@ -77,7 +75,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Cabeçalho Institucional
 st.markdown(
     """
     <div class="sus-header">
@@ -89,7 +86,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Campos de preenchimento
 col1, col2 = st.columns(2)
 with col1:
     nome_paciente = st.text_input("Nome do Paciente", placeholder="Ex: Maria da Silva")
@@ -115,7 +111,6 @@ if btn_gerar:
 
         linha_unidade = f"🏥 Local: {unidade_saude}\n" if unidade_saude else ""
         
-        # Mensagem formatada com os avatares solicitados
         mensagem = (
             f"Olá, {nome_paciente}! 👋\n\n"
             f"Passando para confirmar sua consulta médica agendada:\n\n"
@@ -139,7 +134,6 @@ if btn_gerar:
         with col_btn2:
             st.link_button("📱 Enviar pelo Celular / App", link_api)
 
-# Rodapé
 st.markdown(
     """
     <div class="sus-footer">
